@@ -24,3 +24,30 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+.bg-forex-elegant {
+  background: 
+    /* Deep navy base gradient */
+    linear-gradient(135deg, #0a0e17 0%, #1a2036 100%),
+    /* Subtle shimmer effect (like gold reflections) */
+    repeating-linear-gradient(
+      45deg,
+      rgba(212, 175, 55, 0.05) 0px,
+      rgba(212, 175, 55, 0.05) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    /* Very faint grid (like a trading chart) */
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 
+    100% 100%,
+    200% 200%,
+    20px 20px,
+    20px 20px;
+  animation: shimmer 15s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 0%, 0 0, 0 0, 0 0; }
+  100% { background-position: 0% 0%, 100% 100%, 0 0, 0 0; }
+}

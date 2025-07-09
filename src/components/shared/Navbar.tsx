@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiMenu, FiX, FiArrowRight } from 'react-icons/fi';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,13 +46,7 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link
-                href="#waitlist"
-                className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 transition-colors"
-              >
-                Join Waitlist
-                <FiArrowRight className="ml-2" />
-              </Link>
+              
             </div>
           </div>
 
@@ -86,13 +80,7 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="#waitlist"
-              className="mt-2 block w-full px-3 py-2 rounded-md text-base font-medium text-center text-white bg-green-500 hover:bg-green-600"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Join Waitlist
-            </Link>
+            
           </div>
         </div>
       )}

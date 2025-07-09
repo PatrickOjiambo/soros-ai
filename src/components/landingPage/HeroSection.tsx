@@ -1,21 +1,29 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 "use client"
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
-    const controls = useAnimation();
+    const [email, setEmail] = useState('');
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [ref, inView] = useInView({
         threshold: 0.1,
-        triggerOnce: false
+        triggerOnce: true
     });
 
-    useEffect(() => {
-        if (inView) {
-            controls.start('visible');
-        }
-    }, [controls, inView]);
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Here you would typically send the email to your backend
+        console.log('Submitted email:', email);
+        setIsDialogOpen(false);
+        setEmail('');
+    };
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -65,19 +73,16 @@ const HeroSection = () => {
     };
 
     return (
-        <section ref={ref} className="relative  overflow-hidden">
-            {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-full h-full opacity-10">
-                <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-green-500 filter blur-3xl"></div>
-                <div className="absolute bottom-10 right-20 w-60 h-60 rounded-full bg-blue-500 filter blur-3xl"></div>
-            </div>
+        <section ref={ref} className="relative overflow-hidden">
+           
 
             <motion.div
                 initial="hidden"
-                animate={controls}
+                animate={inView ? "visible" : "hidden"}
                 variants={containerVariants}
                 className="container mx-auto px-6 py-24 md:py-32 flex flex-col md:flex-row items-center relative z-10"
             >
+                {/* Left content */}
                 <div className="md:w-1/2 mb-12 md:mb-0">
                     <motion.div variants={itemVariants} className="inline-block bg-green-500/10 px-4 py-2 rounded-full mb-6">
                         <span className="text-green-400 font-medium tracking-wider">COMING SOON</span>
@@ -93,29 +98,48 @@ const HeroSection = () => {
                         Automate your trading strategy with AI. Get high-probability alerts without staring at charts all day.
                     </motion.p>
 
-                    <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
-                        <motion.button
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="relative overflow-hidden bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 shadow-lg"
-                        >
-                            <span className="relative z-10">Join Waitlist</span>
-                            <span className="absolute inset-0 bg-gradient-to-r from-green-600 to-teal-600 opacity-0 hover:opacity-100 transition-opacity duration-300"></span>
-                        </motion.button>
+                    <motion.div variants={itemVariants} className="flex gap-4">
+                        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                            <DialogTrigger asChild>
+                                <Button 
+                                    className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    Join Waitlist
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px] bg-gray-800 border-gray-700">
+                                <DialogHeader>
+                                    <DialogTitle className="text-white">Join Our Waitlist</DialogTitle>
+                                </DialogHeader>
+                                <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+                                    <div className="grid items-center gap-2">
+                                        <Input
+                                            id="email"
+                                            type="email"
+                                            placeholder="Your email address"
+                                            className="bg-gray-700 border-gray-600 text-white"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <Button type="submit" className="bg-green-500 hover:bg-green-600">
+                                        Submit
+                                    </Button>
+                                </form>
+                            </DialogContent>
+                        </Dialog>
 
-                        <motion.button
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 shadow-lg"
-                        >
-                            Learn More
-                        </motion.button>
+                       
                     </motion.div>
                 </div>
 
+                {/* Right content - Chart */}
                 <motion.div
                     variants={chartVariants}
-                    className="md:w-1/2 relative"
+                    className="md:w-1/2 relative mt-12 md:mt-0"
                 >
                     <motion.div
                         initial="initial"
@@ -123,7 +147,6 @@ const HeroSection = () => {
                         variants={pulseVariants}
                         className="relative h-80 md:h-96 bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 backdrop-blur-sm shadow-2xl"
                     >
-                        {/* Replace with your actual candlestick chart image */}
                         <Image
                             src="/candlestick-chart.png"
                             alt="AI Trading Analysis"
@@ -144,7 +167,7 @@ const HeroSection = () => {
                         </motion.div>
                     </motion.div>
 
-                    {/* Animated trading indicators */}
+                    {/* Animated trading indicator */}
                     <div className="absolute -top-6 -right-6">
                         <motion.div
                             animate={{

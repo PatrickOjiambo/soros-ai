@@ -1,0 +1,14 @@
+syntax = "proto3";
+package tools;
+message ToolCall {
+    repeated string indicators = 1;
+    string strategy = 2;
+    string user_address = 3;
+    string ticker = 4;
+}
+message ToolcallResponse {
+    string user_address = 1;
+    map<string, string> signal = 2;
+    bool success = 3;
+    string error = 4;
+}

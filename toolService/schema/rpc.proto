@@ -1,5 +1,0 @@
-syntax = "proto3";
-import "tools.proto";
-service  ToolsService{
- rpc ToolCall(tools.ToolCall) returns (tools.ToolcallResponse);
-}

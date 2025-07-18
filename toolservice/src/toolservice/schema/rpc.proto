@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "tools.proto";
-service  ToolsService{
- rpc ExecuteTool(tools.ToolCall) returns (tools.ToolcallResponse);
+service ToolsService {
+  rpc ExecuteTool(tools.ToolCall) returns (tools.ToolcallResponse);
+  rpc RefineTool(tools.Refinecall) returns (tools.RefinecallResponse);
 }

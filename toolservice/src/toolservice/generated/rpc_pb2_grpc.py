@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import tools_pb2 as tools__pb2
+from . import tools_pb2 as tools__pb2
 
 GRPC_GENERATED_VERSION = '1.73.1'
 GRPC_VERSION = grpc.__version__
@@ -39,12 +39,23 @@ class ToolsServiceStub(object):
                 request_serializer=tools__pb2.ToolCall.SerializeToString,
                 response_deserializer=tools__pb2.ToolcallResponse.FromString,
                 _registered_method=True)
+        self.RefineTool = channel.unary_unary(
+                '/ToolsService/RefineTool',
+                request_serializer=tools__pb2.Refinecall.SerializeToString,
+                response_deserializer=tools__pb2.RefinecallResponse.FromString,
+                _registered_method=True)
 
 
 class ToolsServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def ExecuteTool(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RefineTool(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -57,6 +68,11 @@ def add_ToolsServiceServicer_to_server(servicer, server):
                     servicer.ExecuteTool,
                     request_deserializer=tools__pb2.ToolCall.FromString,
                     response_serializer=tools__pb2.ToolcallResponse.SerializeToString,
+            ),
+            'RefineTool': grpc.unary_unary_rpc_method_handler(
+                    servicer.RefineTool,
+                    request_deserializer=tools__pb2.Refinecall.FromString,
+                    response_serializer=tools__pb2.RefinecallResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,6 +102,33 @@ class ToolsService(object):
             '/ToolsService/ExecuteTool',
             tools__pb2.ToolCall.SerializeToString,
             tools__pb2.ToolcallResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def RefineTool(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/ToolsService/RefineTool',
+            tools__pb2.Refinecall.SerializeToString,
+            tools__pb2.RefinecallResponse.FromString,
             options,
             channel_credentials,
             insecure,

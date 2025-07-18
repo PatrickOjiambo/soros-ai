@@ -22,16 +22,16 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
-import tools_pb2 as tools__pb2
+from . import tools_pb2 as tools__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\trpc.proto\x1a\x0btools.proto2G\n\x0cToolsService\x12\x37\n\x0b\x45xecuteTool\x12\x0f.tools.ToolCall\x1a\x17.tools.ToolcallResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\trpc.proto\x1a\x0btools.proto2\x83\x01\n\x0cToolsService\x12\x37\n\x0b\x45xecuteTool\x12\x0f.tools.ToolCall\x1a\x17.tools.ToolcallResponse\x12:\n\nRefineTool\x12\x11.tools.Refinecall\x1a\x19.tools.RefinecallResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'rpc_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_TOOLSSERVICE']._serialized_start=26
-  _globals['_TOOLSSERVICE']._serialized_end=97
+  _globals['_TOOLSSERVICE']._serialized_start=27
+  _globals['_TOOLSSERVICE']._serialized_end=158
 # @@protoc_insertion_point(module_scope)

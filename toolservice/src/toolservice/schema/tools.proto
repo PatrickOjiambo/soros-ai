@@ -12,3 +12,13 @@ message ToolcallResponse {
     bool success = 3;
     string error = 4;
 }
+message Refinecall {
+    string user_address = 1;
+    string strategy = 2;
+}
+message RefinecallResponse {
+    string user_address = 1;
+    string refined_strategy = 2;
+    bool success = 3;
+    string error = 4;
+}
